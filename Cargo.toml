@@ -5,6 +5,7 @@ edition = "2018"
 authors = ["Mark <mark@gandolfo.com.au>"]
 
 [dependencies]
+bootloader = "0.9"
 
 [profile.dev]
 panic = "abort"
