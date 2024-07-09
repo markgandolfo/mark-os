@@ -1,0 +1,13 @@
+[package]
+name = "mark_os"
+version = "0.1.0"
+edition = "2018"
+authors = ["Mark <mark@gandolfo.com.au>"]
+
+[dependencies]
+
+[profile.dev]
+panic = "abort"
+
+[profile.release]
+panic = "abort"
