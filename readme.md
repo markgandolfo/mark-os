@@ -15,9 +15,14 @@ rustup component add llvm-tools-preview
 
 We need a system to run the kernel, we will use [QEMU](https://www.qemu.org/download/#linux) for this, but you could use anything... 
 
-
+on linux
 ```sh
 sudo apt-get install qemu-system
+```
+
+Or if you're on mac
+```sh
+brew install qemu # if you're on mac
 ```
 
 ## Build
