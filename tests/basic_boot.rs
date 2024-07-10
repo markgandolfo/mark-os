@@ -7,30 +7,21 @@
 use core::panic::PanicInfo;
 use mark_os::println;
 
+// as this is a standalone executable we need to nostd, nomain, etc.
+// as well as provide an entry point in for our program.
 #[no_mangle]
 pub extern "C" fn _start() -> ! {
-    println!("hello world{}", "!");
-
-    #[cfg(test)]
     test_main();
 
     loop {}
 }
 
-#[cfg(not(test))]
-#[panic_handler]
-fn panic(info: &PanicInfo) -> ! {
-    println!("{}", info);
-    loop {}
-}
-
-#[cfg(test)]
 #[panic_handler]
 fn panic(info: &PanicInfo) -> ! {
     mark_os::test_panic_handler(info)
 }
 
 #[test_case]
-fn trivial_assertion() {
-    assert_eq!(1, 1);
+fn test_println() {
+    println!("test_println output");
 }
