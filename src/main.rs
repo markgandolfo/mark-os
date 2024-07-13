@@ -13,10 +13,10 @@ pub extern "C" fn _start() -> ! {
 
     mark_os::init();
 
-    // loop {
-    //     use mark_os::print;
-    //     print!("-");
-    // }
+    // page fault
+    use x86_64::registers::control::Cr3;
+    let (level_4_page_table, _) = Cr3::read();
+    println!("Level 4 page table at: {:?}", level_4_page_table);
 
     // Double fault execption
     // unsafe { *(0xdeadbeef as *mut u8) = 42 };
