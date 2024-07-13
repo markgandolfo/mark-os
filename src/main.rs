@@ -4,31 +4,19 @@
 #![test_runner(mark_os::test_runner)]
 #![reexport_test_harness_main = "test_main"]
 
+use bootloader::{entry_point, BootInfo};
 use core::panic::PanicInfo;
 use mark_os::println;
 
-#[no_mangle]
-pub extern "C" fn _start() -> ! {
-    println!("hello world{}", "!");
+entry_point!(kernel_main);
 
+fn kernel_main(boot_info: &'static BootInfo) -> ! {
+    use mark_os::memory::BootInfoFrameAllocator;
+
+    println!("hello world{}", "!");
     mark_os::init();
 
-    // page fault
-    use x86_64::registers::control::Cr3;
-    let (level_4_page_table, _) = Cr3::read();
-    println!("Level 4 page table at: {:?}", level_4_page_table);
-
-    // Double fault execption
-    // unsafe { *(0xdeadbeef as *mut u8) = 42 };
-
-    // invoke a breakpoint exception
-    // x86_64::instructions::interrupts::int3();
-
-    // stack overflow
-    // fn stack_overflow() {
-    //     stack_overflow();
-    // }
-    // stack_overflow();
+    let mut frame_allocator = unsafe { BootInfoFrameAllocator::init(&boot_info.memory_map) };
 
     #[cfg(test)]
     test_main();
