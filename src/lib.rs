@@ -7,11 +7,14 @@
 
 use core::panic::PanicInfo;
 
+pub mod allocator;
 pub mod gdt;
 pub mod interupts;
 pub mod memory;
 pub mod serial;
 pub mod vga_buffer;
+
+extern crate alloc;
 
 #[cfg(test)]
 use bootloader::{entry_point, BootInfo};
