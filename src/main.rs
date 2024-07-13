@@ -13,6 +13,11 @@ pub extern "C" fn _start() -> ! {
 
     mark_os::init();
 
+    // loop {
+    //     use mark_os::print;
+    //     print!("-");
+    // }
+
     // Double fault execption
     // unsafe { *(0xdeadbeef as *mut u8) = 42 };
 
@@ -20,23 +25,23 @@ pub extern "C" fn _start() -> ! {
     // x86_64::instructions::interrupts::int3();
 
     // stack overflow
-    fn stack_overflow() {
-        stack_overflow();
-    }
-    stack_overflow();
+    // fn stack_overflow() {
+    //     stack_overflow();
+    // }
+    // stack_overflow();
 
     #[cfg(test)]
     test_main();
 
     println!("It did not crash!");
-    loop {}
+    mark_os::hlt_loop();
 }
 
 #[cfg(not(test))]
 #[panic_handler]
 fn panic(info: &PanicInfo) -> ! {
     println!("{}", info);
-    loop {}
+    mark_os::hlt_loop();
 }
 
 #[cfg(test)]

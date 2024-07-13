@@ -32,6 +32,12 @@ cargo build
 cargo bootimage
 ```
 
+## Run Tests
+
+```sh
+cargo test --lib
+```
+
 
 ## Run
 
