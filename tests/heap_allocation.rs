@@ -48,6 +48,26 @@ fn large_vec() {
     assert_eq!(vec.iter().sum::<u64>(), (n - 1) * n / 2);
 }
 
+// create ten thousand allocations after each other to test
+use mark_os::allocator::HEAP_SIZE;
+#[test_case]
+fn many_boxes() {
+    for i in 0..HEAP_SIZE {
+        let x = Box::new(i);
+        assert_eq!(*x, i);
+    }
+}
+
+#[test_case]
+fn many_boxes_long_lived() {
+    let long_lived = Box::new(1); // new
+    for i in 0..HEAP_SIZE {
+        let x = Box::new(i);
+        assert_eq!(*x, i);
+    }
+    assert_eq!(*long_lived, 1); // new
+}
+
 #[panic_handler]
 fn panic(info: &PanicInfo) -> ! {
     mark_os::test_panic_handler(info)
